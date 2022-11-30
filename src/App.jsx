@@ -1,7 +1,7 @@
 import { h } from "preact";
-import { useCallback, useEffect, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef } from "preact/hooks";
 import { setup, styled } from "goober";
-import { Koco } from "./Koco";
+import { DateChecker } from "./DateChecker";
 
 const Background = styled("div")`
   background-color: white;
@@ -13,12 +13,17 @@ const Background = styled("div")`
   overflow: hidden;
 `;
 
+const Container = styled("div")`
+  width: 100%;
+  height: 100%;
+`;
+
 setup(h);
 
 const OFFSET_DIVISOR = 60;
 
 export const App = () => {
-  const [kocoOffset, setKocoOffset] = useState({ left: 0, top: 0 });
+  const transformRef = useRef();
 
   const handleMouseMove = useCallback((event) => {
     const pageMiddle = {
@@ -31,7 +36,8 @@ export const App = () => {
       top: (pageMiddle.height - event.clientY) / OFFSET_DIVISOR,
     };
 
-    setKocoOffset(translateOffset);
+    if (transformRef.current.base)
+      transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
   }, []);
 
   useEffect(() => {
@@ -41,15 +47,9 @@ export const App = () => {
 
   return (
     <Background>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          transform: `translate(${kocoOffset.left}px, ${kocoOffset.top}px)`,
-        }}
-      >
-        <Koco />
-      </div>
+      <Container ref={transformRef}>
+        <DateChecker />
+      </Container>
     </Background>
   );
 };
