@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "goober": "^2.1.11",
     "preact": "^10.11.2"
   },
   "devDependencies": {
