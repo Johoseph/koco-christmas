@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Srisakdi";
+  src: url("./Srisakdi-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Srisakdi";
+  src: url("./Srisakdi-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  font-family: Srisakdi, 'Times New Roman', Times, serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+}
