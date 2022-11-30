@@ -19,7 +19,7 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
 
   const handleKeyDown = useCallback(
     (event) => {
-      if (event.key === "ArrowLeft" && viewDay > 0) {
+      if (event.key === "ArrowLeft" && viewDay > 1) {
         setViewDay((prev) => prev - 1);
         setShowOverlay(false);
       }
