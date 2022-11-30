@@ -1,22 +1,35 @@
-import { useCallback } from "preact/hooks";
-import dayjs from "dayjs";
+import { useState, useCallback, useEffect } from "preact/hooks";
 
-const day = parseInt(dayjs().format("D"), 10);
+export const Koco = ({ currentDay, maxDay }) => {
+  const [viewDay, setViewDay] = useState(currentDay);
 
-export const Koco = ({ forceShow }) => {
   // Delete nodes that should not be showing
   const handleAdventDay = useCallback(
     (fragment) => {
-      if (forceShow) return fragment.props.children;
-
       return fragment.props.children.filter((child) => {
         const dayToShow = parseInt(child.props["data-advent-day"], 10);
 
-        return dayToShow <= day;
+        return dayToShow <= viewDay;
       });
     },
-    [forceShow]
+    [viewDay]
   );
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft" && viewDay > 0)
+        setViewDay((prev) => prev - 1);
+
+      if (event.key === "ArrowRight" && viewDay < maxDay)
+        setViewDay((prev) => prev + 1);
+    },
+    [viewDay]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  });
 
   return (
     <svg
