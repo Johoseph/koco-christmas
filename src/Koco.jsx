@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "preact/hooks";
 
-export const Koco = ({ currentDay, maxDay }) => {
+export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
   const [viewDay, setViewDay] = useState(currentDay);
 
   // Delete nodes that should not be showing
@@ -17,13 +17,17 @@ export const Koco = ({ currentDay, maxDay }) => {
 
   const handleKeyDown = useCallback(
     (event) => {
-      if (event.key === "ArrowLeft" && viewDay > 0)
+      if (event.key === "ArrowLeft" && viewDay > 0) {
         setViewDay((prev) => prev - 1);
+        setShowOverlay(false);
+      }
 
-      if (event.key === "ArrowRight" && viewDay < maxDay)
+      if (event.key === "ArrowRight" && viewDay < maxDay) {
         setViewDay((prev) => prev + 1);
+        setShowOverlay(false);
+      }
     },
-    [viewDay]
+    [viewDay, setShowOverlay]
   );
 
   useEffect(() => {

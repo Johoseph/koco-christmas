@@ -12,7 +12,7 @@ const maxDay = year > 2022 ? 24 : Math.min(day, 24);
 
 const isAdventOrFuture = year > 2022 || (year === 2022 && month === 12);
 
-export const DateChecker = () => {
+export const DateChecker = (props) => {
   // Session storage var to override calendar
   const force = useMemo(() => sessionStorage.getItem("FORCE_SHOW") === "1", []);
 
@@ -20,6 +20,10 @@ export const DateChecker = () => {
   if (!force && !isAdventOrFuture) return <></>;
 
   return (
-    <Koco currentDay={force ? 24 : currentDay} maxDay={force ? 24 : maxDay} />
+    <Koco
+      currentDay={force ? 24 : currentDay}
+      maxDay={force ? 24 : maxDay}
+      {...props}
+    />
   );
 };

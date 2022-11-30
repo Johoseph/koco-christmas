@@ -1,7 +1,8 @@
 import { h } from "preact";
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import { setup, styled } from "goober";
 import { DateChecker } from "./DateChecker";
+import { Overlay } from "./Overlay";
 
 const Background = styled("div")`
   background-color: white;
@@ -23,6 +24,8 @@ setup(h);
 const OFFSET_DIVISOR = 60;
 
 export const App = () => {
+  const [showOverlay, setShowOverlay] = useState(true);
+
   const transformRef = useRef();
 
   const handleMouseMove = useCallback((event) => {
@@ -48,8 +51,9 @@ export const App = () => {
   return (
     <Background>
       <Container ref={transformRef}>
-        <DateChecker />
+        <DateChecker setShowOverlay={setShowOverlay} />
       </Container>
+      <Overlay showOverlay={showOverlay} />
     </Background>
   );
 };
