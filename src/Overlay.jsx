@@ -6,12 +6,21 @@ const Wrapper = styled("div")`
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   opacity: ${(props) => (props.isOpaque ? 0 : 1)};
 
   transition: opacity 1000ms;
+`;
+
+const TextWrap = styled("div")`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
 `;
 
 const Heading = styled("h1")`
@@ -30,8 +39,10 @@ const Text = styled("span")`
 export const Overlay = ({ showOverlay }) => {
   return (
     <Wrapper isOpaque={!showOverlay}>
-      <Heading>🎅 Advent 2022 🎄</Heading>
-      <Text>Use the arrow keys to get started...</Text>
+      <TextWrap>
+        <Heading>🎅 Advent 2022 🎄</Heading>
+        <Text>Use the arrow keys to get started...</Text>
+      </TextWrap>
     </Wrapper>
   );
 };
