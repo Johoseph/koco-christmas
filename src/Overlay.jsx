@@ -8,7 +8,7 @@ const Wrapper = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: ${(props) => (props.isOpaque ? 0 : 1)};
+  opacity: ${(props) => (props.isOpaque ? 1 : 0)};
 
   transition: opacity 1000ms;
 `;
@@ -38,7 +38,7 @@ const Text = styled("span")`
 
 export const Overlay = ({ showOverlay }) => {
   return (
-    <Wrapper isOpaque={!showOverlay}>
+    <Wrapper isOpaque={showOverlay}>
       <TextWrap>
         <Heading>🎅 Advent 2022 🎄</Heading>
         <Text>Use the arrow keys to get started...</Text>
