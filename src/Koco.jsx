@@ -28,6 +28,9 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
         setViewDay((prev) => prev + 1);
         setShowOverlay(false);
       }
+
+      if (event.key === "ArrowRight" && viewDay === maxDay)
+        setShowOverlay(false);
     },
     [viewDay, setShowOverlay]
   );
@@ -59,6 +62,7 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
           <g
             data-advent-day="1"
             transform="matrix(6.61003,0,0,6.61003,-916.953,-276.162)"
+            class="fade"
           >
             <circle
               cx="258.03"
