@@ -53,6 +53,7 @@ export const App = () => {
       <Container ref={transformRef}>
         <DateChecker setShowOverlay={setShowOverlay} />
       </Container>
+      <div id="currentDay" />
       <Overlay showOverlay={showOverlay} />
     </Background>
   );

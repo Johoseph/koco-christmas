@@ -1,4 +1,6 @@
 import { useState, useCallback, useEffect } from "preact/hooks";
+import { createPortal } from "preact/compat";
+import { CurrentDay } from "./CurrentDay";
 
 export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
   const [viewDay, setViewDay] = useState(currentDay);
@@ -47,6 +49,11 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
       xmlnsSerif="http://www.serif.com/"
       style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;"
     >
+      {document.getElementById("currentDay") &&
+        createPortal(
+          <CurrentDay viewDay={viewDay} />,
+          document.getElementById("currentDay")
+        )}
       {handleAdventDay(
         <>
           <g
