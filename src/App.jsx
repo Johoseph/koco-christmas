@@ -73,9 +73,9 @@ export const App = () => {
     };
 
     // Don't update transform for large jumps
-    if (Math.abs(translateOffset.left - currentTransform.left) > 20)
+    if (Math.abs(translateOffset.left - currentTransform.left) > 50)
       translateOffset.left = currentTransform.left;
-    if (Math.abs(translateOffset.top - currentTransform.top) > 20)
+    if (Math.abs(translateOffset.top - currentTransform.top) > 50)
       translateOffset.top = currentTransform.top;
 
     if (transformRef.current.base)
