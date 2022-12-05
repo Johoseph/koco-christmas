@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "preact/hooks";
 import { createPortal } from "preact/compat";
+import Hammer from "hammerjs";
 import { CurrentDay } from "./CurrentDay";
 
 export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
@@ -32,13 +33,37 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
       if (event.key === "ArrowRight" && viewDay === maxDay)
         setShowOverlay(false);
     },
-    [viewDay, setShowOverlay]
+    [viewDay, setShowOverlay, maxDay]
   );
+
+  const handleSwipe = useCallback(
+    (direction) => {
+      if (direction === "right" && viewDay > 1) {
+        setViewDay((prev) => prev - 1);
+        setShowOverlay(false);
+      }
+
+      if (direction === "left" && viewDay < maxDay) {
+        setViewDay((prev) => prev + 1);
+        setShowOverlay(false);
+      }
+
+      if (direction === "left" && viewDay === maxDay) setShowOverlay(false);
+    },
+    [viewDay, setShowOverlay, maxDay]
+  );
+
+  useEffect(() => {
+    const hammer = new Hammer(document);
+    hammer.on("swipeleft", () => handleSwipe("left"));
+    hammer.on("swiperight", () => handleSwipe("right"));
+    return () => hammer.destroy();
+  }, [handleSwipe]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [handleKeyDown]);
 
   return (
     <svg

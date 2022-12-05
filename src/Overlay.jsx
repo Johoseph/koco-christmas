@@ -1,3 +1,4 @@
+import { useMemo } from "preact/hooks";
 import { styled } from "goober";
 
 const Wrapper = styled("div")`
@@ -21,27 +22,73 @@ const TextWrap = styled("div")`
   background: white;
   padding: 20px;
   border-radius: 20px;
+  max-width: 80vw;
+`;
+
+const HeadingWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 10px;
+
+  @media (max-width: 1000px) {
+    font-size: 70px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 50px;
+  }
 `;
 
 const Heading = styled("h1")`
-  font-size: 100px;
-  font-weight: bold;
   color: #333;
-  margin-top: 0;
-  margin-bottom: 10px;
+  font-size: inherit;
+  text-align: center;
+  margin: 10px;
+  margin-bottom: 0px;
+
+  @media (max-width: 800px) {
+    width: min-content;
+  }
 `;
 
 const Text = styled("span")`
   font-size: 30px;
   color: #333;
+
+  @media (max-width: 1000px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
 export const Overlay = ({ showOverlay }) => {
+  const isTouchEnabled = useMemo(() => {
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  }, []);
+
   return (
     <Wrapper isOpaque={showOverlay}>
       <TextWrap>
-        <Heading>🎅 Advent 2022 🎄</Heading>
-        <Text>Use the arrow keys to get started...</Text>
+        <HeadingWrap>
+          <span>🎅</span>
+          <Heading>Advent 2022</Heading>
+          <span>🎄</span>
+        </HeadingWrap>
+        <Text>
+          {isTouchEnabled
+            ? "Swipe to get started..."
+            : "Use the arrow keys to get started..."}
+        </Text>
       </TextWrap>
     </Wrapper>
   );

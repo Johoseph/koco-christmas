@@ -17,15 +17,32 @@ const Wrapper = styled("div")`
   ${(props) => props.isHidden && `display: none;`}
 
   transition: background 300ms;
+
+  @media (max-width: 600px) {
+    top: 40px;
+    left: 50vw;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    padding: 16px;
+  }
 `;
 
 const Text = styled("div")`
   font-size: 30px;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 const Day = styled("div")`
   font-size: 50px;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    font-size: 42px;
+  }
 `;
 
 const getBackgroundColor = (day) => {
