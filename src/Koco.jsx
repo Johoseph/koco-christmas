@@ -54,7 +54,17 @@ export const Koco = ({ currentDay, maxDay, setShowOverlay }) => {
   );
 
   useEffect(() => {
-    const hammer = new Hammer(document);
+    const hammer = new Hammer(document, {
+      recognizers: [
+        [
+          Hammer.Swipe,
+          {
+            direction: Hammer.DIRECTION_HORIZONTAL,
+            threshold: 0.5,
+          },
+        ],
+      ],
+    });
     hammer.on("swipeleft", () => handleSwipe("left"));
     hammer.on("swiperight", () => handleSwipe("right"));
     return () => hammer.destroy();
