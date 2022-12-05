@@ -23,8 +23,8 @@ const Container = styled("div")`
 setup(h);
 
 const OFFSET_DIVISOR = 60;
-const GRYO_DIVISOR_HORIZONTAL = 20;
-const GRYO_DIVISOR_VERTICAL = 40;
+const GRYO_DIVISOR_HORIZONTAL = 4;
+const GRYO_DIVISOR_VERTICAL = 2;
 
 export const App = () => {
   const [showOverlay, setShowOverlay] = useState(true);
@@ -48,19 +48,13 @@ export const App = () => {
 
   const handlePhoneRotate = useCallback((event) => {
     const gyroMiddle = {
-      alpha: 0,
+      gamma: 0,
       beta: 90,
     };
 
-    console.log({ alpha: event.alpha, beta: event.beta, gamma: event.gamma });
-
     const translateOffset = {
-      left:
-        (gyroMiddle.alpha + Math.max(Math.min(event.alpha, 90), -90)) /
-        GRYO_DIVISOR_HORIZONTAL,
-      top:
-        (gyroMiddle.beta - Math.max(Math.min(event.beta, 180), 0)) /
-        GRYO_DIVISOR_VERTICAL,
+      left: (gyroMiddle.gamma + event.gamma) / GRYO_DIVISOR_HORIZONTAL,
+      top: (gyroMiddle.beta - event.beta) / GRYO_DIVISOR_VERTICAL,
     };
 
     if (transformRef.current.base)
