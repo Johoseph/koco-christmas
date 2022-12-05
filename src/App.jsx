@@ -47,7 +47,7 @@ export const App = () => {
   const handlePhoneRotate = useCallback((event) => {
     const gyroMiddle = {
       gamma: 0,
-      beta: 90,
+      beta: 70,
     };
 
     const currentTranslate = {
@@ -73,9 +73,9 @@ export const App = () => {
     };
 
     // Don't update transform for large jumps
-    if (Math.abs(translate.left - currentTranslate.left) > 8)
+    if (Math.abs(translate.left - currentTranslate.left) > 12)
       translate.left = currentTranslate.left;
-    if (Math.abs(translate.top - currentTranslate.top) > 8)
+    if (Math.abs(translate.top - currentTranslate.top) > 12)
       translate.top = currentTranslate.top;
 
     if (transformRef.current.base)
