@@ -23,6 +23,8 @@ const Container = styled("div")`
 setup(h);
 
 const OFFSET_DIVISOR = 60;
+const GRYO_DIVISOR_HORIZONTAL = 20;
+const GRYO_DIVISOR_VERTICAL = 40;
 
 export const App = () => {
   const [showOverlay, setShowOverlay] = useState(true);
@@ -44,9 +46,34 @@ export const App = () => {
       transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
   }, []);
 
+  const handlePhoneRotate = useCallback((event) => {
+    const gyroMiddle = {
+      alpha: 0,
+      beta: 90,
+    };
+
+    const translateOffset = {
+      left:
+        (gyroMiddle.alpha + Math.max(Math.min(event.alpha, 90), -90)) /
+        GRYO_DIVISOR_HORIZONTAL,
+      top:
+        (gyroMiddle.beta - Math.max(Math.min(event.beta, 180), 0)) /
+        GRYO_DIVISOR_VERTICAL,
+    };
+
+    console.log(translateOffset);
+
+    if (transformRef.current.base)
+      transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
+  }, []);
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("deviceorientation", handlePhoneRotate);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("deviceorientation", handlePhoneRotate);
+    };
   }, []);
 
   return (
