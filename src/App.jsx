@@ -50,7 +50,7 @@ export const App = () => {
       beta: 90,
     };
 
-    const currentTransform = {
+    const currentTranslate = {
       left: 0,
       top: 0,
     };
@@ -63,25 +63,23 @@ export const App = () => {
         .split(", ")
         .map((num) => parseInt(num.replace("px", ""), 10));
 
-      currentTransform.left = transformArray[0];
-      currentTransform.top = transformArray[1];
+      currentTranslate.left = transformArray[0];
+      currentTranslate.top = transformArray[1];
     }
 
-    console.log(currentTransform);
-
-    const translateOffset = {
+    const translate = {
       left: gyroMiddle.gamma + event.gamma,
       top: gyroMiddle.beta - event.beta,
     };
 
     // Don't update transform for large jumps
-    if (Math.abs(translateOffset.left - currentTransform.left) > 50)
-      translateOffset.left = currentTransform.left;
-    if (Math.abs(translateOffset.top - currentTransform.top) > 50)
-      translateOffset.top = currentTransform.top;
+    if (Math.abs(translate.left - currentTranslate.left) > 8)
+      translate.left = currentTranslate.left;
+    if (Math.abs(translate.top - currentTranslate.top) > 8)
+      translate.top = currentTranslate.top;
 
     if (transformRef.current.base)
-      transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
+      transformRef.current.base.style.transform = `translate(${translate.left}px, ${translate.top}px)`;
   }, []);
 
   useEffect(() => {
