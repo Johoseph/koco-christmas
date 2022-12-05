@@ -52,9 +52,11 @@ export const App = () => {
       beta: 90,
     };
 
+    console.log({ beta: event.beta, gamma: event.gamma });
+
     const translateOffset = {
-      left: (gyroMiddle.gamma + event.gamma) / GRYO_DIVISOR_HORIZONTAL,
-      top: (gyroMiddle.beta - event.beta) / GRYO_DIVISOR_VERTICAL,
+      left: gyroMiddle.gamma + event.gamma, //  / GRYO_DIVISOR_HORIZONTAL,
+      top: gyroMiddle.beta - event.beta, // / GRYO_DIVISOR_VERTICAL,
     };
 
     if (transformRef.current.base)
