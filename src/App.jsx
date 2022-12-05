@@ -52,6 +52,8 @@ export const App = () => {
       beta: 90,
     };
 
+    console.log({ alpha: event.alpha, beta: event.beta, gamma: event.gamma });
+
     const translateOffset = {
       left:
         (gyroMiddle.alpha + Math.max(Math.min(event.alpha, 90), -90)) /
@@ -60,8 +62,6 @@ export const App = () => {
         (gyroMiddle.beta - Math.max(Math.min(event.beta, 180), 0)) /
         GRYO_DIVISOR_VERTICAL,
     };
-
-    console.log(translateOffset);
 
     if (transformRef.current.base)
       transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
