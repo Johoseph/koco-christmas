@@ -1,5 +1,6 @@
 import { useMemo } from "preact/hooks";
 import { styled } from "goober";
+import { isTouchEnabled } from "./helpers";
 
 const Wrapper = styled("div")`
   position: fixed;
@@ -68,13 +69,7 @@ const Text = styled("span")`
 `;
 
 export const Overlay = ({ showOverlay }) => {
-  const isTouchEnabled = useMemo(() => {
-    return (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0
-    );
-  }, []);
+  const canTouch = useMemo(() => isTouchEnabled(), []);
 
   return (
     <Wrapper isOpaque={showOverlay}>
@@ -85,7 +80,7 @@ export const Overlay = ({ showOverlay }) => {
           <span>🎄</span>
         </HeadingWrap>
         <Text>
-          {isTouchEnabled
+          {canTouch
             ? "Swipe to get started..."
             : "Use the arrow keys to get started..."}
         </Text>

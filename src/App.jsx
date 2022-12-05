@@ -1,8 +1,15 @@
 import { h } from "preact";
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "preact/hooks";
 import { setup, styled } from "goober";
 import { DateChecker } from "./DateChecker";
 import { Overlay } from "./Overlay";
+import { isTouchEnabled } from "./helpers";
 
 const Background = styled("div")`
   background-color: white;
@@ -27,6 +34,8 @@ const OFFSET_DIVISOR = 60;
 export const App = () => {
   const [showOverlay, setShowOverlay] = useState(true);
 
+  const canTouch = useMemo(() => isTouchEnabled(), []);
+
   const transformRef = useRef();
 
   const handleMouseMove = useCallback((event) => {
@@ -47,7 +56,7 @@ export const App = () => {
   const handlePhoneRotate = useCallback((event) => {
     const gyroMiddle = {
       gamma: 0,
-      beta: 0,
+      beta: 30,
     };
 
     const currentTranslate = {
@@ -83,13 +92,15 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
+    if (canTouch) {
+      window.addEventListener("deviceorientation", handlePhoneRotate);
+    }
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("deviceorientation", handlePhoneRotate);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("deviceorientation", handlePhoneRotate);
     };
-  }, []);
+  }, [canTouch]);
 
   return (
     <Background>
