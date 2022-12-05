@@ -44,9 +44,51 @@ export const App = () => {
       transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
   }, []);
 
+  const handlePhoneRotate = useCallback((event) => {
+    const gyroMiddle = {
+      gamma: 0,
+      beta: 70,
+    };
+
+    const currentTranslate = {
+      left: 0,
+      top: 0,
+    };
+
+    // Get current transform
+    if (transformRef.current.base) {
+      const transformArray = transformRef.current.base.style.transform
+        .replace("translate(", "")
+        .replace(")", "")
+        .split(", ")
+        .map((num) => parseInt(num.replace("px", ""), 10));
+
+      currentTranslate.left = transformArray[0];
+      currentTranslate.top = transformArray[1];
+    }
+
+    const translate = {
+      left: gyroMiddle.gamma + event.gamma,
+      top: gyroMiddle.beta - event.beta,
+    };
+
+    // Don't update transform for large jumps
+    if (Math.abs(translate.left - currentTranslate.left) > 12)
+      translate.left = currentTranslate.left;
+    if (Math.abs(translate.top - currentTranslate.top) > 12)
+      translate.top = currentTranslate.top;
+
+    if (transformRef.current.base)
+      transformRef.current.base.style.transform = `translate(${translate.left}px, ${translate.top}px)`;
+  }, []);
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("deviceorientation", handlePhoneRotate);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("deviceorientation", handlePhoneRotate);
+    };
   }, []);
 
   return (
