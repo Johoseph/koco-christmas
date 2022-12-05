@@ -67,7 +67,7 @@ export const App = () => {
       currentTransform.top = transformArray[1];
     }
 
-    console.log(transformArray);
+    console.log(currentTransform);
 
     const translateOffset = {
       left: gyroMiddle.gamma + event.gamma,
