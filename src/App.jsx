@@ -23,8 +23,6 @@ const Container = styled("div")`
 setup(h);
 
 const OFFSET_DIVISOR = 60;
-const GRYO_DIVISOR_HORIZONTAL = 4;
-const GRYO_DIVISOR_VERTICAL = 2;
 
 export const App = () => {
   const [showOverlay, setShowOverlay] = useState(true);
@@ -52,12 +50,33 @@ export const App = () => {
       beta: 90,
     };
 
-    console.log({ beta: event.beta, gamma: event.gamma });
+    const currentTransform = {
+      left: 0,
+      top: 0,
+    };
+
+    // Get current transform
+    if (transformRef.current.base) {
+      const transformArray = transformRef.current.base.style.transform
+        .replace("translate(", "")
+        .replace(")", "")
+        .split(", ")
+        .map((num) => parseInt(num.replace("px", ""), 10));
+
+      currentTransform.left = transformArray[0];
+      currentTransform.top = transformArray[1];
+    }
 
     const translateOffset = {
-      left: gyroMiddle.gamma + event.gamma, //  / GRYO_DIVISOR_HORIZONTAL,
-      top: gyroMiddle.beta - event.beta, // / GRYO_DIVISOR_VERTICAL,
+      left: gyroMiddle.gamma + event.gamma,
+      top: gyroMiddle.beta - event.beta,
     };
+
+    // Don't update transform for large jumps
+    if (Math.abs(translateOffset.left - currentTransform.left) > 20)
+      translateOffset.left = currentTransform.left;
+    if (Math.abs(translateOffset.top - currentTransform.top) > 20)
+      translateOffset.top = currentTransform.top;
 
     if (transformRef.current.base)
       transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
