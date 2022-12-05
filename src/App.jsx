@@ -56,7 +56,7 @@ export const App = () => {
   const handlePhoneRotate = useCallback((event) => {
     const gyroMiddle = {
       gamma: 0,
-      beta: 50,
+      beta: 70,
     };
 
     const currentTranslate = {
