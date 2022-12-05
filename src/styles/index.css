@@ -3,6 +3,7 @@
   src: url("./Srisakdi-Regular.ttf");
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   src: url("./Srisakdi-Bold.ttf");
   font-weight: bold;
   font-style: normal;
+  font-display: block;
 }
 
 :root {
