@@ -79,7 +79,7 @@ export const App = () => {
       translateOffset.top = currentTransform.top;
 
     if (transformRef.current.base)
-      transformRef.current.base.style.transform = `translate(${translateOffset.left}px, ${translateOffset.top}px)`;
+      transformRef.current.base.style.transform = `translate(${translateOffset.left}px, 0px)`;
   }, []);
 
   useEffect(() => {
