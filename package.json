@@ -9,13 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dayjs": "^1.11.6",
-    "goober": "^2.1.11",
+    "dayjs": "^1.11.18",
+    "goober": "^2.1.16",
     "hammerjs": "^2.0.8",
-    "preact": "^10.11.2"
+    "preact": "^10.27.2"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.4.0",
-    "vite": "^3.2.3"
-  }
+    "@preact/preset-vite": "^2.10.2",
+    "vite": "^7.1.7"
+  },
+  "packageManager": "yarn@4.10.3"
 }
